@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chatbot Empresarial Mejorado con AI Básica</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; text-align: center; }
+    .chat-container { width: 90%; max-width: 600px; margin: 50px auto; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; }
+    .chat-box { padding: 15px; height: 400px; overflow-y: auto; border-bottom: 1px solid #ccc; text-align: left; }
+    .message { margin: 10px 0; padding: 10px; border-radius: 8px; max-width: 80%; clear: both; }
+    .bot-message { background-color: #f1f1f1; float: left; }
+    .user-message { background-color: #0084ff; color: #fff; float: right; }
+    .input-container { display: flex; padding: 10px; background: #ffffff; border-top: 1px solid #ccc; }
+    input[type="text"] { flex: 1; padding: 10px; border: none; border-radius: 5px; font-size: 16px; }
+    button { padding: 10px 20px; background-color: #0084ff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-left: 10px; }
+    button:hover { background-color: #006bb3; }
+    .menu-button { margin: 10px; padding: 10px 20px; background-color: #00b386; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+    .menu-button:hover { background-color: #008060; }
+    a { color: #0084ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<div class="chat-container">
+  <div class="chat-box" id="chatBox">
+    <div class="message bot-message">
+      ¡Hola! Soy el asistente virtual de la empresa.<br><br>
+      Puedes elegir escribiendo el número o el tema que te interesa:<br><br>
+      1️⃣ Vacantes disponibles<br>
+      2️⃣ Requisitos para ingresar<br>
+      3️⃣ Documentos necesarios<br>
+      4️⃣ Días de vacaciones<br>
+      5️⃣ Procesos administrativos<br><br>
+      Escribe <strong>menu</strong> o presiona el botón para regresar al menú.
+    </div>
+  </div>
+
+  <button class="menu-button" onclick="showMainMenu()">Menú Principal</button>
+
+  <div class="input-container">
+    <input type="text" id="userInput" placeholder="Escribe aquí el número o la opción..." autofocus>
+    <button onclick="sendMessage()">Enviar</button>
+  </div>
+</div>
+
+<script>
+  const chatBox = document.getElementById("chatBox");
+
+  function sendMessage() {
+    const userInput = document.getElementById("userInput").value.trim().toLowerCase();
+    if (userInput === "") return;
+
+    chatBox.innerHTML += `<div class="message user-message">${userInput}</div>`;
+    document.getElementById("userInput").value = "";
+
+    setTimeout(() => {
+      let botResponse = getBotResponse(userInput);
+      if (botResponse !== "") {
+        chatBox.innerHTML += `<div class="message bot-message">${botResponse}</div>`;
+      }
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }, 500);
+  }
+
+  function showMainMenu() {
+    const response = `📋 Menú Principal:<br><br>
+      1️⃣ Vacantes disponibles<br>
+      2️⃣ Requisitos para ingresar<br>
+      3️⃣ Documentos necesarios<br>
+      4️⃣ Días de vacaciones<br>
+      5️⃣ Procesos administrativos<br><br>
+      Si necesitas ayuda humana, contacta:<br>
+      📧 <a href="mailto:asistencia@empresa.com.mx">asistencia@empresa.com.mx</a><br>
+      ☎️ 555-321-9876`;
+    chatBox.innerHTML += `<div class="message bot-message">${response}</div>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  function getBotResponse(input) {
+    if (input === "menu") {
+      showMainMenu();
+      return "";
+    }
+
+    // Palabras clave para respuestas básicas (AI sencilla)
+    if (input.match(/(vacantes|trabajo|puestos|empleo)/)) {
+      return `🔎 Vacantes disponibles:<br><br>
+        1️⃣ Producción: Operador de maquinaria<br>
+        2️⃣ Almacén: Auxiliar de inventarios<br>
+        3️⃣ Administración: Analista contable<br>
+        4️⃣ Atención al cliente: Ejecutivo telefónico<br><br>
+        Envía tu CV a <a href="mailto:reclutamiento@empresa.com.mx">reclutamiento@empresa.com.mx</a>`;
+    }
+
+    if (input.match(/(requisitos|ingreso|contratar|entrar)/)) {
+      return `📋 Requisitos para ingresar:<br><br>
+        ✔ Mayor de 18 años<br>
+        ✔ Experiencia mínima de 1 año<br>
+        ✔ CV actualizado<br><br>
+        Más info: <a href="mailto:recursos.humanos@empresa.com.mx">recursos.humanos@empresa.com.mx</a>`;
+    }
+
+    if (input.match(/(documentos|papeles|llevar|necesito)/)) {
+      return `📑 Documentos necesarios:<br><br>
+        🆔 INE/Pasaporte<br>
+        📄 CURP<br>
+        📚 Certificado académico<br><br>
+        Descarga el formato aquí:<br>
+        <a href="https://empresa.com.mx/formatos/documentos.pdf" target="_blank">Formato de Documentos</a>`;
+    }
+
+    if (input.match(/(vacaciones|dias|descanso)/)) {
+      return `🏖️ Días de vacaciones:<br><br>
+        📅 1 año: 6 días<br>
+        📅 2 años: 8 días<br><br>
+        Solicita tus vacaciones aquí:<br>
+        <a href="mailto:nominas@empresa.com.mx">nominas@empresa.com.mx</a>`;
+    }
+
+    if (input.match(/(proceso|administrativo|permisos|nómina|seguridad|higiene)/)) {
+      return `⚙️ Procesos administrativos disponibles:<br><br>
+        1️⃣ Solicitud de permisos<br>
+        2️⃣ Pago de nómina<br>
+        3️⃣ Seguridad e higiene<br><br>
+        Escribe el número para más información.`;
+    }
+
+    if (input === "1" || input.includes("solicitud de permisos")) {
+      return `📝 Solicitud de permisos:<br><br>
+        Descarga el formato:<br><a href="https://empresa.com.mx/formatos/solicitud-permiso.pdf" target="_blank">Formato Solicitud</a><br><br>
+        Envíalo a:<br><a href="mailto:permisos@empresa.com.mx">permisos@empresa.com.mx</a>`;
+    }
+
+    if (input === "2" || input.includes("pago de nómina")) {
+      return `💰 Pago de nómina:<br><br>
+        Se realiza cada viernes antes de las 3 p.m.<br>
+        Consultas: <a href="mailto:nominas@empresa.com.mx">nominas@empresa.com.mx</a>`;
+    }
+
+    if (input === "3" || input.includes("seguridad e higiene")) {
+      return `🛠 Seguridad e Higiene:<br><br>
+        Reporta cualquier incidente a:<br><a href="mailto:seguridad@empresa.com.mx">seguridad@empresa.com.mx</a><br>
+        Capacitación obligatoria cada 6 meses.`;
+    }
+
+    if (input.includes("sí") || input.includes("ok")) {
+      return "¡Perfecto! ¿Sobre qué otra cosa quieres información?";
+    }
+
+    if (input.includes("no") || input.includes("gracias")) {
+      return "¡De nada! Estoy para ayudarte cuando quieras.";
+    }
+
+    // Respuesta por defecto si no reconoce
+    return `❗ No entendí tu mensaje. Puedes:<br><br>
+      👉 Escribir <strong>menu</strong> o presionar el botón para regresar.<br>
+      👉 Contactar a un asistente humano:<br>
+      📧 <a href="mailto:asistencia@empresa.com.mx">asistencia@empresa.com.mx</a><br>
+      ☎️ 555-321-9876`;
+  }
+</script>
+
+</body>
+</html>
