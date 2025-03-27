@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chatbot Empresarial Mejorado</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; text-align: center; }
+    .chat-container { width: 90%; max-width: 600px; margin: 50px auto; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; }
+    .chat-box { padding: 15px; height: 450px; overflow-y: auto; border-bottom: 1px solid #ccc; text-align: left; }
+    .message { margin: 10px 0; padding: 10px; border-radius: 8px; max-width: 80%; clear: both; }
+    .bot-message { background-color: #f1f1f1; float: left; }
+    .user-message { background-color: #0084ff; color: #fff; float: right; }
+    .input-container { display: flex; padding: 10px; background: #ffffff; border-top: 1px solid #ccc; }
+    input[type="text"] { flex: 1; padding: 10px; border: none; border-radius: 5px; font-size: 16px; }
+    button { padding: 10px 20px; background-color: #0084ff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-left: 10px; }
+    button:hover { background-color: #006bb3; }
+    .menu-button { margin: 10px; padding: 10px 20px; background-color: #00b386; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+    .menu-button:hover { background-color: #008060; }
+    a { color: #0084ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<div class="chat-container">
+  <div class="chat-box" id="chatBox">
+    <div class="message bot-message">
+      ¡Hola! Soy el asistente virtual de la empresa.<br><br>
+      Puedes elegir escribiendo el número o el tema que te interesa:<br><br>
+      1️⃣ Vacantes disponibles<br>
+      2️⃣ Requisitos para ingresar<br>
+      3️⃣ Documentos necesarios<br>
+      4️⃣ Días de vacaciones<br>
+      5️⃣ Procesos administrativos<br>
+      6️⃣ Descargar cartas laborales<br>
+      7️⃣ Cartas del INFONAVIT<br>
+      8️⃣ Turnos disponibles por área<br>
+      9️⃣ Días inhábiles oficiales<br>
+      🔟 Descargar Constancia de Vigencia de Derechos IMSS<br><br>
+      Escribe <strong>menu</strong> o presiona el botón para regresar al menú principal.
+    </div>
+  </div>
+
+  <button class="menu-button" onclick="showMainMenu()">Menú Principal</button>
+
+  <div class="input-container">
+    <input type="text" id="userInput" placeholder="Escribe aquí el número o la opción..." autofocus>
+    <button onclick="sendMessage()">Enviar</button>
+  </div>
+</div>
+
+<script>
+  const chatBox = document.getElementById("chatBox");
+
+  function sendMessage() {
+    const userInput = document.getElementById("userInput").value.trim().toLowerCase();
+    if (userInput === "") return;
+
+    chatBox.innerHTML += `<div class="message user-message">${userInput}</div>`;
+    document.getElementById("userInput").value = "";
+
+    setTimeout(() => {
+      let botResponse = getBotResponse(userInput);
+      if (botResponse !== "") {
+        chatBox.innerHTML += `<div class="message bot-message">${botResponse}</div>`;
+      }
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }, 500);
+  }
+
+  function showMainMenu() {
+    const response = `📋 Menú Principal:<br><br>
+      1️⃣ Vacantes disponibles<br>
+      2️⃣ Requisitos para ingresar<br>
+      3️⃣ Documentos necesarios<br>
+      4️⃣ Días de vacaciones<br>
+      5️⃣ Procesos administrativos<br>
+      6️⃣ Descargar cartas laborales<br>
+      7️⃣ Cartas del INFONAVIT<br>
+      8️⃣ Turnos disponibles por área<br>
+      9️⃣ Días inhábiles oficiales<br>
+      🔟 Descargar Constancia de Vigencia de Derechos IMSS<br><br>
+      Si necesitas ayuda humana, contacta:<br>
+      📧 <a href="mailto:asistencia@empresa.com.mx">asistencia@empresa.com.mx</a><br>
+      ☎️ 555-321-9876`;
+    chatBox.innerHTML += `<div class="message bot-message">${response}</div>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  function getBotResponse(input) {
+    if (input === "menu") {
+      showMainMenu();
+      return "";
+    }
+
+    switch (input) {
+      case "1":
+      case "vacantes disponibles":
+        return `🔎 Vacantes disponibles:<br><br>
+          ➤ Producción: Operador de maquinaria (Turno matutino y nocturno)<br>
+          ➤ Almacén: Auxiliar de inventarios (Turno vespertino)<br>
+          ➤ Administración: Analista contable (Turno mixto)<br>
+          ➤ Atención al cliente: Ejecutivo telefónico (Turno matutino)<br><br>
+          Envía tu CV a <a href="mailto:reclutamiento@empresa.com.mx">reclutamiento@empresa.com.mx</a>`;
+
+      case "2":
+      case "requisitos para ingresar":
+        return `📋 Requisitos para ingresar:<br><br>
+          ✔ Ser mayor de 18 años<br>
+          ✔ Contar con estudios mínimos de preparatoria<br>
+          ✔ Experiencia mínima de 1 año en el puesto (opcional para algunos cargos)<br>
+          ✔ Documentación completa y actualizada<br><br>
+          Más información: <a href="mailto:recursos.humanos@empresa.com.mx">recursos.humanos@empresa.com.mx</a>`;
+
+      case "3":
+      case "documentos necesarios":
+        return `📑 Documentos necesarios para el ingreso:<br><br>
+          🆔 Identificación oficial (INE o Pasaporte)<br>
+          📄 CURP<br>
+          🏠 Comprobante de domicilio reciente<br>
+          🩺 Certificado médico<br>
+          📚 Comprobante de estudios<br><br>
+          Descarga la lista de documentos aquí:<br>
+          <a href="https://empresa.com.mx/formatos/documentos.pdf" target="_blank">Formato de Documentos</a>`;
+
+      case "4":
+      case "días de vacaciones":
+        return `🏖️ Días de vacaciones por antigüedad:<br><br>
+          📅 1 año: 6 días<br>
+          📅 2 años: 8 días<br>
+          📅 3 años: 10 días<br>
+          📅 4-9 años: 12 días<br><br>
+          Solicítalas enviando el formato a:<br>
+          <a href="mailto:nominas@empresa.com.mx">nominas@empresa.com.mx</a><br>
+          Descarga el formato aquí:<br>
+          <a href="https://empresa.com.mx/formatos/solicitud-vacaciones.pdf" target="_blank">Solicitud de Vacaciones</a>`;
+
+      case "5":
+      case "procesos administrativos":
+        return `⚙️ Procesos administrativos disponibles:<br><br>
+          1️⃣ Solicitud de permisos<br>
+          2️⃣ Pago de nómina<br>
+          3️⃣ Seguridad e higiene<br><br>
+          Escribe el número correspondiente para más información.`;
+
+      case "6":
+      case "descargar cartas laborales":
+        return `📄 Descargar cartas laborales:<br><br>
+          ➤ Carta de recomendación<br>
+          ➤ Carta de constancia de trabajo<br><br>
+          Descarga los formatos aquí:<br>
+          <a href="https://empresa.com.mx/formatos/cartas-laborales.zip" target="_blank">Descargar Cartas Laborales</a><br><br>
+          Para firmarlas, envía a:<br>
+          <a href="mailto:rrhh@empresa.com.mx">rrhh@empresa.com.mx</a>`;
+
+      case "7":
+      case "cartas del infonavit":
+        return `🏠 Cartas del INFONAVIT disponibles:<br><br>
+          ➤ Carta retención de descuentos<br>
+          ➤ Carta no adeudo<br><br>
+          Solicita tu carta enviando correo a:<br>
+          📧 <a href="mailto:infonavit@empresa.com.mx">infonavit@empresa.com.mx</a><br><br>
+          También puedes consultar tu estado en:<br>
+          🌐 <a href="https://micuenta.infonavit.org.mx" target="_blank">Mi Cuenta INFONAVIT</a>`;
+
+      case "8":
+      case "turnos disponibles por área":
+        return `🕒 Turnos disponibles por área:<br><br>
+          ➤ Producción: Matutino (6 am - 2 pm), Nocturno (10 pm - 6 am)<br>
+          ➤ Almacén: Vespertino (2 pm - 10 pm)<br>
+          ➤ Administración: Mixto (8 am - 5 pm)<br>
+          ➤ Atención al cliente: Matutino (7 am - 3 pm), Vespertino (3 pm - 11 pm)<br><br>
+          Para cambios de turno escribe a:<br>
+          <a href="mailto:turnos@empresa.com.mx">turnos@empresa.com.mx</a>`;
+
+      case "9":
+      case "días inhábiles oficiales":
+        return `📆 Días inhábiles oficiales en México 2024:<br><br>
+          ➤ 1 de enero - Año Nuevo<br>
+          ➤ 5 de febrero - Día de la Constitución<br>
+          ➤ 18 de marzo - Natalicio de Benito Juárez<br>
+          ➤ 1 de mayo - Día del Trabajo<br>
+          ➤ 16 de septiembre - Día de la Independencia<br>
+          ➤ 20 de noviembre - Revolución Mexicana<br>
+          ➤ 25 de diciembre - Navidad<br><br>
+          Más información en:<br>
+          <a href="mailto:nominas@empresa.com.mx">nominas@empresa.com.mx</a>`;
+
+      case "10":
+      case "descargar constancia de vigencia de derechos imss":
+        return `🩺 Constancia de Vigencia de Derechos IMSS:<br><br>
+          Pasos para descargar:<br>
+          1️⃣ Entra al portal oficial: <a href="https://serviciosdigitales.imss.gob.mx/gestionAsegurados-web-externo/vigencia" target="_blank">IMSS Vigencia</a><br>
+          2️⃣ Ingresa tu CURP, NSS y un correo electrónico válido<br>
+          3️⃣ Descarga el PDF con tu vigencia actualizada<br><br>
+          Si necesitas ayuda, escribe a:<br>
+          📧 <a href="mailto:seguridadsocial@empresa.com.mx">seguridadsocial@empresa.com.mx</a>`;
+
+      case "1":
+        return `📝 Solicitud de permisos:<br><br>
+          Descarga el formato aquí:<br>
+          <a href="https://empresa.com.mx/formatos/solicitud-permiso.pdf" target="_blank">Formato de Solicitud</a><br><br>
+          Envíalo a:<br>
+          <a href="mailto:permisos@empresa.com.mx">permisos@empresa.com.mx</a>`;
+
+      case "2":
+        return `💰 Pago de nómina:<br><br>
+          Se realiza cada viernes antes de las 3 p.m.<br>
+          Cualquier aclaración escribir a:<br>
+          <a href="mailto:nominas@empresa.com.mx">nominas@empresa.com.mx</a>`;
+
+      case "3":
+        return `🛠 Seguridad e Higiene:<br><br>
+          Reporta cualquier incidente a:<br>
+          <a href="mailto:seguridad@empresa.com.mx">seguridad@empresa.com.mx</a><br>
+          Participa en la capacitación cada 6 meses.`;
+
+      default:
+        return `❗ No entendí tu mensaje. Puedes:<br><br>
+          👉 Escribir <strong>menu</strong> o presionar el botón para regresar al menú.<br>
+          👉 Contactar a un asistente humano:<br>
+          📧 <a href="mailto:asistencia@empresa.com.mx">asistencia@empresa.com.mx</a><br>
+          ☎️ 555-321-9876`;
+    }
+  }
+</script>
+
+</body>
+</html>
